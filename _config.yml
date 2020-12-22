@@ -1,5 +1,6 @@
-title: Slate theme
-description: Slate is a theme for GitHub Pages.
-show_downloads: true
+title: AmazonELECTRA
+description: A Pre-Trained Model for Contextual Representation of Amazon Review Dataset
+show_downloads: false
 google_analytics:
 theme: jekyll-theme-slate
+gem "github-pages", group: :jekyll_plugins
