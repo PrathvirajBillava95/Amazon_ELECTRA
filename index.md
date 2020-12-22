@@ -2,15 +2,11 @@
 layout: default
 ---
 
-# Introduction
-
-## What is ELECTRA and AmazonELECTRA model, and what research problem are we trying to solve?
+## What is ELECTRA?
 
 Natural Language Processing Models have witnessed a considerable improvement lately, especially after the introduction of the Transformer and Attention mechanism in 2017 (Vaswani, et al. 2017). The introduction of BERT was the ImageNet moment for the NLP community. BERT, which stands for Pre-training of Deep Bidirectional Transformers for Language Understanding (Devlin, et al. 2018), gained a substantial improvement over its predecessor LSTM and Bi-LSTM. However, since BERT's introduction to NLP, many researchers have started investigating BERT's components and identifying areas where further improvement could happen. One of those improvements is the loss function of BERT model.
 The loss function in BERT depends on the idea of masking 15% of the sequence (later 100%) and asking the loss function to predict the original word for the masked sequence through a pre-training process. Those sequences are part of unlabeled unstructured datasets such as Wikipedia and Book Corpus. However, the ELECTRA, Pre-training Text Encoders as Discriminators Rather Than Generators (Clark, et al. 2020), re-constructed the loss function with game theory concepts to be a binary loss function. Instead of predicting the hidden word, in the case of BERT, in ELECTRA, the model will replace one or more word in the sequence with an equivalent word and ask the loss function to predict whether this word is replaced or original. This idea is straightforward but very powerful in capturing the unlabeled dataset's contextual representation, as we can see in figure 1.
 
-
-# Research Questions
 
 ## Can we improve ELECTRA performance in Amazon related tasks by pre-training ELECTRA with Amazon Dataset?
 
@@ -36,114 +32,71 @@ In this phase, we pre-processed the dataset from the JSON dataset to an unlabele
 
 Part of the fine-tuning process is to prepare our dataset from raw amazon review dataset. However, due to copyright issues we cannot share any pre-processed dataset. Instead, we created a script that download the raw dataset from hugging face database which already has “amazon_us_review” dataset. In the experimental side of our project at GitHub we will focus on this dataset till we mange to create scripts for other datasets such as Amazon Sentimental Analysis dataset
 
+## Building the vocabulary file (Features)
 
+The word embedding matrix in a BERT-like model consists of a list of vocabulary and its context-independent representation. Features in this matrix represent the relationship between those words in terms of the context. This is similar to the Word2Vec model, which tries to capture the word embeddings between the word in an unstructured dataset. We used the following tutorial from Transformers Blog to build our vocabulary file using Google Compute engine with an adequate number of CPUs and RAM volume, 
 
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
+[Link to another page](https://huggingface.co/blog/how-to-trainl).
 
-## Header 2
+We generated a specific domain vocabulary (50K words) using Amazon Review Dataset. Below are examples of how word embeddings are constructed inside BERT-like models.
 
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
+We choose 50K words like what RoBERTA (Liu, et al. 2019) and BioMegaTron (Shin, et al. 2020) model used, which seems to be more effective in capturing the contextual representation than the 30K size that was used by both BERT and ELECTRA.
 
-### Header 3
+Following this section, we started preparing our model for pre-training and fine-tuning, and we will talk about each section in detail separately.
 
-```js
-// Javascript code with syntax highlighting.
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
-```
+## ELECTRA Hyperparameters 
 
-```ruby
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
-```
+Hyperparameters in BERT-like models play a significant role in improving the loss score during the pre-training phase and accuracy during the fine-tuning phase. One of these hyperparameters is the batch size. The batch size affects the flexibility of the learning, as stated by RoBERTa. The model RoBERTa used up to 8K as batch size, similar to what PubMedBERT and BioMegatron models used. In our experiment, we used up to 1024 as batch size, and we pre-trained our model for more than 250K steps.  The original ELECTRA model was pre-trained using 1M steps with a batch size of 256, which means both have an equal number of samples iterated in the pre-training phase.
 
-#### Header 4
+Moreover, the learning rate is another critical component in the pre-training phase. We kept the learning rate like the one used in the ELECTRA original setting. Learning rate represent the peak value of the learning rate at the 10% steps before decaying to the rest of the pre-training phase. The 10% phase in deep learning is called the warmup stage and it is widely used in literature. After we initiate the pre-training stage with our model, we monitor the progress of the loss score through Tensor Board, as we will show later.
 
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
+# Experiment and results 
 
-##### Header 5
+## Pre-Training Phase
 
-1.  This is an ordered list following a header.
-2.  This is an ordered list following a header.
-3.  This is an ordered list following a header.
+The first step in this phase is to convert the raw dataset where each sentence is separated with a new line to a tensor dataset. However, this part is time and resource-consuming, so we have used up to 84 CPUs and 400 RAM to complete this process in 1-2 hours. Then later, we uploaded those ~1000 TensorFlow records to our google bucket. we use up to 32 TPUv3 kindly provided by TensorFlow Research Unit TFRC from the Google team. We use ELECTRA opensource project at GitHub, which can be accessed through their page:
 
-###### Header 6
+[Link to another page](https://github.com/google-research/electra).
 
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
+We started the pre-training phase, and we monitor the loss score through the tensor board for 2 days and 18 hours until it reached 250K steps.
 
-### There's a horizontal rule below this.
+## Fine-Tuning Phase
+After pretraining the model, the next step was to fine tune it on NLP downstream tasks. We decided to choose two NLP tasks, i.e., Sentence Classification and Question Answering to fine tune our model and analyze the results.
 
-* * *
+### The dataset used for Sentence classification and Question Answering tasks are as follows,
 
-### Here is an unordered list:
+### Sentence Classification: 
 
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
+Evaluation metric for this task is Loss score and accuracy.
 
-### And an ordered list:
+- Amazon Sentimental Analysis
+  - Train Dataset :200k reviews(85Mb), Dev Dataset: 40k reviews (17Mb).
+- Amazon Review Dataset
+  - Train Dataset: 454k (191Mb), Dev Dataset: 113K (48Mb)
+- SST-2 (GLUE)
+  - Train Dataset: 67k, Dev Dataset: 1.8k
 
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
+### Question Answering: 
 
-### And a nested list:
+Evaluation metric for this task is F1 score and exact match EM
 
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
+* AmazonQA (A Review-Based Question Answering Task)
 
-### Small image
+Even though we initially decided to fine-tune our models on two tasks, but due to time constraint and resource restriction, we were only able to fine-tune our model for the Sentence Classification task. Question Answering task dataset i.e. AmazonQA is a large dataset (size > 1.5 GB) and requires a lot of preprocessing which needs additional time and resources. So, we are planning to fine-tune the model with AmazonQA dataset in future.
 
-![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)
+# Conclusion and Discussion
 
-### Large image
+The first question that we will tackle down in this discussion is whether AmazonELECTRA achieves the excepted results as per our hypothesis or not. As we can observe from results in Table 4, the Amazon sentimental analysis dataset, Amazon Kaggle dataset, and SST-2 dataset with AmazonELECTRA model achieved a gain in performance over ELECTRA by 0.5%-0.8%. For the reader, this may not be a noticeable improvement. However, text classification tasks tend to have this marginal performance gain as we can observe from BERT and ELECTRA results. However, we are expecting further improvement in other tasks such as question answering tasks (AmazonQA) and text generation tasks. 
 
-![Branching](https://guides.github.com/activities/hello-world/branching.png)
+On the other hand, hyperparameters optimization HPO helps deep learning models finding the best points were model coverage. As we can see from table 5 the gap between the best and worst performance in F1 score is ~3% despite that they all used the same pre-trained model. This highlighted the effect of choosing hyperparameters during fine-tuning phase on the downstream task’s performance. Moreover, this is in line with early findings in literature showing the effect of batch size on BERT performance (Yao, et al. 2018). Finally, one of the interesting points that is debatable here is whether this improvement with AmazonELECTRA is due to the domain constrained dataset or the type of language used on this dataset (informal). We still have some doubts about this point, and with further investigation, we may reach a firm conclusion later.
 
+# What we have learned so far from this project?
 
-### Definition lists can be used with HTML syntax.
+To begin with, we are extremely happy with the experiment's results obtained so far. Even though it is early to commit that our hypothesis is true, we are satisfied with the results obtained and believe that we are on the right track.
 
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
+ELECTRA is a state of art model in many NLP tasks, working with this model helped us understand the current trends in the NLP domain. Also, it helped us to learn the transformer architecture and differences in the architecture of BERT and ELECTRA. Furthermore, the experiment results from our project illustrated how important it is to use hyperparameters optimization (HPO) to select the optimal hyperparameters for the model. Through this project, we also learned to use handy tools like TensorBoard and wandb which is quite useful to analyze the results. We used Google TPUs for training and finetuning which was quite exciting. TPUs improves the speed of training and finetuning by a significant amount.
 
-```
-Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-```
+On a personal note, we both learned a lot working on this Project. I (Raj) worked on a deep learning project for the first time and since we worked on a SOTA model it was a great learning experience. Also, I (Raj) would like to give special thanks to Sultan Alrowili, who came up with the main idea behind the project. Working alongside an already experienced person like Sultan helped me understand the concepts quickly and made it easier for me to work on this project
 
-```
-The final element.
-```
+Overall, we explored the behavior of ELECTRA model when pre-trained will a domain specific dataset. Initial analysis of our result says that the model pre-trained with domain specific dataset performs considerably better then the original model trained with generic dataset like Wikipedia. We are further investigating our model by finetuning it with more domain specific datasets as well as generic datasets to strengthen our hypothesis. 
+
