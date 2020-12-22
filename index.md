@@ -6,14 +6,19 @@ layout: default
 
 Natural Language Processing Models have witnessed a considerable improvement lately, especially after the introduction of the [Transformer and Attention mechanism](https://arxiv.org/pdf/1706.03762.pdf) in 2017. The introduction of BERT was the ImageNet moment for the NLP community. 
 
-[BERT](https://arxiv.org/pdf/1810.04805.pdf), which stands for Pre-training of Deep Bidirectional Transformers for Language Understanding, gained a substantial improvement over its predecessor LSTM and Bi-LSTM. However, since BERT's introduction to NLP, many researchers have started investigating BERT's components and identifying areas where further improvement could happen. One of those improvements is the loss function of BERT model. The loss function in BERT depends on the idea of masking 15% of the sequence (later 100%) and then asking the loss function to predict the original word for the masked sequence through a pre-training process. Those sequences are part of unlabeled unstructured datasets such as Wikipedia and Book Corpus. 
+[BERT](https://arxiv.org/pdf/1810.04805.pdf), which stands for Pre-training of Deep Bidirectional Transformers for Language Understanding, gained a substantial improvement over its predecessor LSTM and Bi-LSTM. However, since BERT's introduction to NLP, many researchers have started investigating BERT's components and identifying areas where further improvement could happen. One of those improvements is the loss function of BERT model. The loss function in BERT depends on the idea of masking 15% of the sequence (later 100%) and then asking the loss function to predict the original word for the masked sequence through a pre-training process. Those sequences are part of unlabeled unstructured datasets such as Wikipedia and Book Corpus. One downside of BERT model is that it only learns from the masked tokens due to which it requires more resources to train the model. Additionally, the mask token only appears in the pre-training stage and not during the finetuning due to which there is a slight loss of performance in fine-tuned models.    
 
-However, the [ELECTRA: Pre-training Text Encoders as Discriminators Rather Than Generators](https://arxiv.org/pdf/2003.10555.pdf) model re-constructed the loss function with game theory concepts to be a binary loss function. Instead of predicting the hidden word, in the case of BERT, the ELECTRA model will replace one or more word in the sequence with an equivalent word and ask the loss function to predict whether this word is replaced or original. This idea is straightforward but very powerful in capturing the unlabeled dataset's contextual representation.
+To address this problem in BERT, the [ELECTRA: Pre-training Text Encoders as Discriminators Rather Than Generators](https://arxiv.org/pdf/2003.10555.pdf) model re-constructed the loss function with game theory concepts, to be a binary loss function. Instead of predicting the hidden word like BERT, the ELECTRA model will replace one or more word in the sequence with an equivalent word and ask the loss function to predict whether this word is replaced or original. This idea is straightforward but very powerful in capturing the unlabeled dataset's contextual representation.
 
 ![Architecture](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/ELECTRA_architecture.png)
 
 ELECTRA Architecture (Source - [ELECTRA paper](https://arxiv.org/pdf/2003.10555.pdf))
 
+In term of results, we can see a noticeable improvement over BERT and other models as shown in the below table
+
+![Table1](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/ELECTRA_GLUE_results.png)
+
+Results for models on the GLUE test set. Only models with single task finetuning (Source - [ELECTRA paper](https://arxiv.org/pdf/2003.10555.pdf))
 
 ### Can we further improve ELECTRA's performance in Amazon related tasks by pre-training ELECTRA with Amazon Dataset?
 
@@ -21,15 +26,17 @@ Transformers-based models are based on the idea of pre-training a deep learning 
 
 The reader should not interpret domain adaptation as a particular field of science, such as biology, chemistry, mathematics, computer science, etc. Domain in this context represents a unique characteristic in which corpora(text) forms its vocabulary and structure. 
 
-For example, the Twitter dataset represents a domain in itself since it has a unique type of vocabulary (informal words mostly) and a short length of sequence which is less than 140 characters. The covid-19 dataset (CORD-19) also represents another domain since it uses a specific domain vocabulary in the biomedical field. Promising domain adaptation results in literature such as [BioBERT](https://arxiv.org/ftp/arxiv/papers/1901/1901.08746.pdf), [PubMedBERT](https://arxiv.org/pdf/2007.15779.pdf), [BioMegaTron](https://arxiv.org/pdf/2010.06060.pdf), and Covid-Twitter-BERT(https://arxiv.org/pdf/2005.07503.pdf) motivated us to study the domain adaptation of [Amazon Review Dataset](https://nijianmo.github.io/amazon/index.html) using the ELECTRA model.
+For example, the Twitter dataset represents a domain in itself since it has a unique type of vocabulary (informal words mostly) and a short length of sequence which is less than 140 characters. The covid-19 dataset (CORD-19) also represents another domain since it uses a specific domain vocabulary in the biomedical field. Promising domain adaptation results in literature such as [BioBERT](https://arxiv.org/ftp/arxiv/papers/1901/1901.08746.pdf), [PubMedBERT](https://arxiv.org/pdf/2007.15779.pdf), [BioMegaTron](https://arxiv.org/pdf/2010.06060.pdf), and Covid-Twitter-BERT(https://arxiv.org/pdf/2005.07503.pdf) motivated us to study the domain adaptation of [Amazon Review Dataset](https://nijianmo.github.io/amazon/index.html) using the ELECTRA model. We call this model as AmazonELECTRA.
 
-### How is Hyper parameters affecting our model performance?
+Now given our model- AmazonELECTR, we further try to address following questions
+* * *
 
-This sub-question is aimed more toward a general deep learning technique, which is part of our project learning process. To answer this question later, we will investigate trying out different hyperparameters, especially in the fine-tuning phase, such as learning rate, epochs, batch size, FP16 (mixed precision), PyTorch XLA, etc.
-
-### What will be the performance of the AmazonELECTRA model in the out-domain dataset?
-
-Another question that we will be investigating is the performance of AmazonELECTRA with general domain datasets such as [GLUE benchmark](https://arxiv.org/pdf/1804.07461.pdf. This question will focus more on whether the potential improvement with AmazonELECTRA is caused by using informal dataset or the domain constrained dataset.
+> How is Hyper parameters affecting our model performance?
+> This sub-question is aimed more toward a general deep learning technique, which is part of our project learning process. To answer this question later, we will investigate trying out different hyperparameters, especially in the fine-tuning phase, such as learning rate, epochs, batch size, FP16 (mixed precision), PyTorch XLA, etc.
+>
+>
+> What will be the performance of the AmazonELECTRA model in the out-domain dataset?
+>Another question that we will be investigating is the performance of AmazonELECTRA with general domain datasets such as [GLUE benchmark](https://arxiv.org/pdf/1804.07461.pdf. This question will focus more on whether the potential improvement with AmazonELECTRA is caused by using informal dataset or the domain constrained dataset.
 
 * * *
 
