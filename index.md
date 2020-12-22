@@ -184,6 +184,10 @@ On a personal note, we (Prathviraj Billava and Sultan Alrowili) both learned a l
 
 Overall, we explored the behavior of ELECTRA model when pre-trained with a domain specific dataset. Initial analysis of our result says that the model pre-trained with domain specific dataset performs considerably better then the original model trained with generic dataset like Wikipedia. We are further investigating our model by finetuning it with more domain specific datasets as well as generic datasets to strengthen our hypothesis.
 
+
+* * *
+
+
 ## References
 
 1. Clark, Kevin, Minh-Thang Luong, Quoc V. Le, and Christopher D. Manning. 2020. ELECTRA: Pre-training Text Encoders as Discriminators Rather Than Generators. arxiv.org. [https://arxiv.org/abs/2003.10555](https://arxiv.org/abs/2003.10555)
