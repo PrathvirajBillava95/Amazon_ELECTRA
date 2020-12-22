@@ -12,7 +12,7 @@ However, the [ELECTRA: Pre-training Text Encoders as Discriminators Rather Than 
 
 ![Architecture](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/ELECTRA_architecture.png)
 
-ELECTRA Architecture (Source - [ELECTRA paper](https://arxiv.org/pdf/2003.10555.pdf))
+                              ELECTRA Architecture (Source - [ELECTRA paper](https://arxiv.org/pdf/2003.10555.pdf))
 
 
 ### Can we further improve ELECTRA's performance in Amazon related tasks by pre-training ELECTRA with Amazon Dataset?
