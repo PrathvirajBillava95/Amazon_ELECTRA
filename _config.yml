@@ -4,3 +4,4 @@ show_downloads: false
 google_analytics:
 theme: jekyll-theme-slate
 gem "github-pages", group: :jekyll_plugins
+github: https://github.com/PrathvirajBillava95/AmazonELECTRA
