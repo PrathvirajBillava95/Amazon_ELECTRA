@@ -184,31 +184,17 @@ On a personal note, we (Prathviraj Billava and Sultan Alrowili) both learned a l
 
 Overall, we explored the behavior of ELECTRA model when pre-trained with a domain specific dataset. Initial analysis of our result says that the model pre-trained with domain specific dataset performs considerably better then the original model trained with generic dataset like Wikipedia. We are further investigating our model by finetuning it with more domain specific datasets as well as generic datasets to strengthen our hypothesis.
 
-# References
+## References
 
-Clark, Kevin, Minh-Thang Luong, Quoc V. Le, and Christopher D. Manning. 2020. ELECTRA: Pre-training Text Encoders as Discriminators Rather Than Generators. arxiv.org. https://arxiv.org/abs/2003.10555.
-
-Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2018. "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding." https://arxiv.org/abs/1810.04805.
-
-Gupta, Mansi, Nitish Kulkarni, Raghuveer Chanda, Anirudha Rayasam, and Zachary C Lipton. 2019. AmazonQA: A Review-Based Question Answering Task. arxiv. https://arxiv.org/abs/1908.04364.
-
-Jianmo Ni, Jiacheng Li, Julian McAuley. 2019. Justifying Recommendations using Distantly-Labeled Reviews and Fine-Grained Aspects. ACL. https://www.aclweb.org/anthology/D19-1018.
-
-Lee, Jinhyuk, Wonjin Yoon, Sungdong Kim, Donghyeon Kim, Sunkyu Kim, Chan Ho So, and Jaewoo Kang. 2019. BioBERT: a pre-trained biomedical language representation model for biomedical text mining. arxiv. https://arxiv.org/abs/1901.08746.
-
-Liu, Yinhan, Myle Ott, Naman Goyal, Jingfei Du, Mandar Joshi, Danqi Chen, Omer Levy, Mike Lewis, Luke Zettlemoyer, and Veselin Stoyanov. 2019. RoBERTa: A Robustly Optimized BERT Pretraining Approach. arxiv.org. https://arxiv.org/abs/1907.11692.
-
-Müller, Martin, Marcel Salathé, and Per E Kummervold. 2020. COVID-Twitter-BERT: A Natural Language Processing Model to Analyse COVID-19 Content on Twitter. arxiv. https://arxiv.org/abs/2005.07503.
-
-Shin, Hoo-Chang, Yang Zhang, Evelina Bakhturina, Raul Puri, Mostofa Patwary, Mohammad Shoeybi, and Raghav Mani. 2020. BioMegatron: Larger Biomedical Domain Language Model. arxiv.org. https://arxiv.org/abs/2010.06060.
-
-TINN, YU GU : ROBERT, HAOCHENG, MICHAEL LUCAS, NAOTOUSUYAMA, and XIAODONG. 2020. "Domain-Specific Language Model Pretraining for Biomedical." https://arxiv.org/pdf/2007.15779.pdf.
-
-Vaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. 2017. Attention Is All You Need. arxiv.org. https://arxiv.org/abs/1706.03762.
-
-Wang, Alex, Amanpreet Singh, Julian Michael, Felix Hill, Omer Levy, and Samuel R. Bowman. 2018. GLUE: A Multi-Task Benchmark and Analysis Platform for Natural Language Understanding. arxiv.org. https://arxiv.org/abs/1804.07461.
-
-Yao, Zhewei, Amir Gholami, Daiyaan Arfeen, Richard Liaw, Joseph Gonzalez, Kurt Keutzer, and Michael Mahoney. 2018. Large batch size training of neural networks with adversarial training and second-order information. arxiv. https://.org/abs/1810.01021.
-
-
-
+1. Clark, Kevin, Minh-Thang Luong, Quoc V. Le, and Christopher D. Manning. 2020. ELECTRA: Pre-training Text Encoders as Discriminators Rather Than Generators. arxiv.org. https://arxiv.org/abs/2003.10555.
+1. Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2018. "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding." https://arxiv.org/abs/1810.04805.
+1. Gupta, Mansi, Nitish Kulkarni, Raghuveer Chanda, Anirudha Rayasam, and Zachary C Lipton. 2019. AmazonQA: A Review-Based Question Answering Task. arxiv. https://arxiv.org/abs/1908.04364.
+1. Jianmo Ni, Jiacheng Li, Julian McAuley. 2019. Justifying Recommendations using Distantly-Labeled Reviews and Fine-Grained Aspects. ACL. https://www.aclweb.org/anthology/D19-1018.
+1. Lee, Jinhyuk, Wonjin Yoon, Sungdong Kim, Donghyeon Kim, Sunkyu Kim, Chan Ho So, and Jaewoo Kang. 2019. BioBERT: a pre-trained biomedical language representation model for biomedical text mining. arxiv. https://arxiv.org/abs/1901.08746.
+1. Liu, Yinhan, Myle Ott, Naman Goyal, Jingfei Du, Mandar Joshi, Danqi Chen, Omer Levy, Mike Lewis, Luke Zettlemoyer, and Veselin Stoyanov. 2019. RoBERTa: A Robustly Optimized BERT Pretraining Approach. arxiv.org. https://arxiv.org/abs/1907.11692.
+1. Müller, Martin, Marcel Salathé, and Per E Kummervold. 2020. COVID-Twitter-BERT: A Natural Language Processing Model to Analyse COVID-19 Content on Twitter. arxiv. https://arxiv.org/abs/2005.07503.
+1. Shin, Hoo-Chang, Yang Zhang, Evelina Bakhturina, Raul Puri, Mostofa Patwary, Mohammad Shoeybi, and Raghav Mani. 2020. BioMegatron: Larger Biomedical Domain Language Model. arxiv.org. https://arxiv.org/abs/2010.06060.
+1. TINN, YU GU : ROBERT, HAOCHENG, MICHAEL LUCAS, NAOTOUSUYAMA, and XIAODONG. 2020. "Domain-Specific Language Model Pretraining for Biomedical." https://arxiv.org/pdf/2007.15779.pdf.
+1. Vaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Lukasz Kaiser, and Illia Polosukhin. 2017. Attention Is All You Need. arxiv.org. https://arxiv.org/abs/1706.03762.
+1. Wang, Alex, Amanpreet Singh, Julian Michael, Felix Hill, Omer Levy, and Samuel R. Bowman. 2018. GLUE: A Multi-Task Benchmark and Analysis Platform for Natural Language Understanding. arxiv.org. https://arxiv.org/abs/1804.07461.
+1. Yao, Zhewei, Amir Gholami, Daiyaan Arfeen, Richard Liaw, Joseph Gonzalez, Kurt Keutzer, and Michael Mahoney. 2018. Large batch size training of neural networks with adversarial training and second-order information. arxiv. https://.org/abs/1810.01021.
