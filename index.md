@@ -12,7 +12,7 @@ However, the [ELECTRA: Pre-training Text Encoders as Discriminators Rather Than 
 
 ![Architecture](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/ELECTRA_architecture.png)
 
-                              ELECTRA Architecture (Source - [ELECTRA paper](https://arxiv.org/pdf/2003.10555.pdf))
+ELECTRA Architecture (Source - [ELECTRA paper](https://arxiv.org/pdf/2003.10555.pdf))
 
 
 ### Can we further improve ELECTRA's performance in Amazon related tasks by pre-training ELECTRA with Amazon Dataset?
@@ -79,9 +79,9 @@ After pretraining the model, the next step was to fine tune it on NLP downstream
 
 #### The dataset used for Sentence classification and Question Answering tasks are as follows,
 
-```
-#### Sentence Classification: 
+##### Sentence Classification:
 
+``` 
 Evaluation metric for this task is Loss score and accuracy.
 
 1. Amazon Sentimental Analysis
@@ -92,9 +92,9 @@ Evaluation metric for this task is Loss score and accuracy.
   - Train Dataset: 67k, Dev Dataset: 1.8k
 ```
 
-```
-#### Question Answering: 
+##### Question Answering:
 
+```
 Evaluation metric for this task is F1 score and exact match EM
 
 1. AmazonQA (A Review-Based Question Answering Task)
