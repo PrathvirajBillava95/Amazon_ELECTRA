@@ -12,7 +12,7 @@ To address this problem in BERT, the [ELECTRA: Pre-training Text Encoders as Dis
 
 ![Architecture](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/ELECTRA_architecture.png)
 
-_ELECTRA Architecture (Source - [ELECTRA paper](https://arxiv.org/pdf/2003.10555.pdf))
+_ELECTRA Architecture (Source - [ELECTRA paper](https://arxiv.org/pdf/2003.10555.pdf)_
 
 In term of results, we can see a noticeable improvement over BERT and other models as shown in the below table
 
