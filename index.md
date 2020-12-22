@@ -14,11 +14,11 @@ To address this problem in BERT, the [ELECTRA: Pre-training Text Encoders as Dis
 
 _ELECTRA Architecture (Source - [ELECTRA paper](https://arxiv.org/pdf/2003.10555.pdf))_
 
-In term of results, we can see a noticeable improvement over BERT and other models as shown in the below table
+In term of results, we can see a noticeable improvement with ELECTRA model over BERT and other models as shown in the below table
 
 ![Table1](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/ELECTRA_GLUE_results.png)
 
-_Results for models on the GLUE test set (Source - [ELECTRA paper](https://arxiv.org/pdf/2003.10555.pdf))_
+_Results for various models on the GLUE test set (Source - [ELECTRA paper](https://arxiv.org/pdf/2003.10555.pdf))_
 
 #### Can we further improve ELECTRA's performance in Amazon related tasks by pre-training ELECTRA with Amazon Dataset?
 
