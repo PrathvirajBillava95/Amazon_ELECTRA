@@ -12,13 +12,13 @@ To address this problem in BERT, the [ELECTRA: Pre-training Text Encoders as Dis
 
 ![Architecture](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/ELECTRA_architecture.png)
 
-ELECTRA Architecture (Source - [ELECTRA paper](https://arxiv.org/pdf/2003.10555.pdf))
+_ELECTRA Architecture (Source - [ELECTRA paper](https://arxiv.org/pdf/2003.10555.pdf))
 
 In term of results, we can see a noticeable improvement over BERT and other models as shown in the below table
 
 ![Table1](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/ELECTRA_GLUE_results.png)
 
-Results for models on the GLUE test set (Source - [ELECTRA paper](https://arxiv.org/pdf/2003.10555.pdf))
+_Results for models on the GLUE test set (Source - [ELECTRA paper](https://arxiv.org/pdf/2003.10555.pdf))
 
 #### Can we further improve ELECTRA's performance in Amazon related tasks by pre-training ELECTRA with Amazon Dataset?
 
@@ -70,7 +70,7 @@ We generated a specific domain vocabulary (50K words) using Amazon Review Datase
 
 ![Figure 2](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/Word_embedding_3.png)
 
-(Source : [Medium - Understanding BERT-Word Embeddings](https://medium.com/@dhartidhami/understanding-bert-word-embeddings-7dc4d2ea54ca))
+_(Source : [Medium - Understanding BERT-Word Embeddings](https://medium.com/@dhartidhami/understanding-bert-word-embeddings-7dc4d2ea54ca))
 
 We choose 50K words like what [RoBERTa](https://arxiv.org/pdf/1907.11692.pdf) and [BioMegaTron](https://arxiv.org/pdf/2010.06060.pdf) model used, which seems to be more effective in capturing the contextual representation than the 30K words that was used by BERT and ELECTRA model.
 
@@ -91,7 +91,7 @@ Moreover, the learning rate is another critical component in the pre-training ph
 | Batch Size         | 256     | 1024          |
 | Train Steps        | 766K    | 250K          |
 
-Hyperparameters used for ELECTRA and AmazonELECTRA during pre-training phase.
+_Hyperparameters used for ELECTRA and AmazonELECTRA during pre-training phase.
 
 
 * * *
@@ -109,7 +109,7 @@ We started the pre-training phase, and we monitor the loss score through the ten
 
 ![Figure 3](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/Tensorboard_4.png)
 
-Loss score during the Pre-Training Phase observed using Tensor Board 
+_Loss score during the Pre-Training Phase observed using Tensor Board 
 
 ### Fine-Tuning Phase
 
@@ -152,7 +152,7 @@ We have also used wandb.ai tool from hugging face library which tracks different
 
 ![Figure 6](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/wandb.png)
 
-The effect of fine-tuning AmazonELECTRA for longer steps (epochs) on loss score
+_The effect of fine-tuning AmazonELECTRA for longer steps (epochs) on loss score
 
 The below table shows the results of running Hyperparameters search (grid search) on Amazon US Review Dataset using 3090 RTX
 
