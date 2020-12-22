@@ -10,7 +10,7 @@ Natural Language Processing Models have witnessed a considerable improvement lat
 
 However, the [ELECTRA: Pre-training Text Encoders as Discriminators Rather Than Generators](https://arxiv.org/pdf/2003.10555.pdf) model re-constructed the loss function with game theory concepts to be a binary loss function. Instead of predicting the hidden word, in the case of BERT, the ELECTRA model will replace one or more word in the sequence with an equivalent word and ask the loss function to predict whether this word is replaced or original. This idea is straightforward but very powerful in capturing the unlabeled dataset's contextual representation.
 
-![Architecture](https://github.com/PrathvirajBillava95/slate/blob/master/images/ELECTRA_architecture.png)
+![Architecture](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/ELECTRA_architecture.png)
 
 ELECTRA Architecture (Source - [ELECTRA paper](https://arxiv.org/pdf/2003.10555.pdf))
 
@@ -49,7 +49,7 @@ Part of the fine-tuning process is to prepare our dataset from raw amazon review
 
 The word embedding matrix in a BERT-like model consists of a list of vocabulary and its context-independent representation. Features in this matrix represent the relationship between those words in terms of the context. This is similar to the Word2Vec model, which tries to capture the word embeddings between the word in an unstructured dataset. We used the following tutorial from Transformers Blog to build our vocabulary file using Google Compute engine with an adequate number of CPUs and RAM volume, 
 
-[Tutorial link](https://huggingface.co/blog/how-to-train).
+[Tutorial link](https://huggingface.co/blog/how-to-train)
 
 We generated a specific domain vocabulary (50K words) using Amazon Review Dataset. Below are examples of how word embeddings are constructed inside BERT-like models.
 
@@ -69,17 +69,18 @@ Moreover, the learning rate is another critical component in the pre-training ph
 
 The first step in this phase is to convert the raw dataset where each sentence is separated with a new line to a tensor dataset. However, this part is time and resource-consuming, so we have used up to 84 CPUs and 400 RAM to complete this process in 1-2 hours. Then later, we uploaded those ~1000 TensorFlow records to our google bucket. we use up to 32 TPUv3 kindly provided by TensorFlow Research Unit TFRC from the Google team. We use ELECTRA opensource project from GitHub
 
-[ELECTRA GitHub](https://github.com/google-research/electra).
+[ELECTRA GitHub](https://github.com/google-research/electra)
 
 We started the pre-training phase, and we monitor the loss score through the tensor board for 2 days and 18 hours until it reached 250K steps.
 
-## Fine-Tuning Phase
+### Fine-Tuning Phase
 
 After pretraining the model, the next step was to fine tune it on NLP downstream tasks. We decided to choose two NLP tasks, i.e., Sentence Classification and Question Answering to fine tune our model and analyze the results.
 
-### The dataset used for Sentence classification and Question Answering tasks are as follows,
+#### The dataset used for Sentence classification and Question Answering tasks are as follows,
 
-### Sentence Classification: 
+```
+#### Sentence Classification: 
 
 Evaluation metric for this task is Loss score and accuracy.
 
@@ -89,12 +90,15 @@ Evaluation metric for this task is Loss score and accuracy.
   - Train Dataset: 454k (191Mb), Dev Dataset: 113K (48Mb)
 3. SST-2 (GLUE)
   - Train Dataset: 67k, Dev Dataset: 1.8k
+```
 
-### Question Answering: 
+```
+#### Question Answering: 
 
 Evaluation metric for this task is F1 score and exact match EM
 
 1. AmazonQA (A Review-Based Question Answering Task)
+```
 
 Even though we initially decided to fine-tune our models on two tasks, but due to time constraint and resource restriction, we were only able to fine-tune our model for the Sentence Classification task. Question Answering task dataset i.e. AmazonQA is a large dataset (size > 1.5 GB) and requires a lot of preprocessing which needs additional time and resources. So, we are planning to fine-tune the model with AmazonQA dataset in future.
 
