@@ -26,7 +26,7 @@ Transformers-based models are based on the idea of pre-training a deep learning 
 
 The reader should not interpret domain adaptation as a particular field of science, such as biology, chemistry, mathematics, computer science, etc. Domain in this context represents a unique characteristic in which corpora(text) forms its vocabulary and structure. 
 
-For example, the Twitter dataset represents a domain in itself since it has a unique type of vocabulary (informal words mostly) and a short length of sequence which is less than 140 characters. The covid-19 dataset (CORD-19) also represents another domain since it uses a specific domain vocabulary in the biomedical field. Promising domain adaptation results in literature such as [BioBERT](https://arxiv.org/ftp/arxiv/papers/1901/1901.08746.pdf), [PubMedBERT](https://arxiv.org/pdf/2007.15779.pdf), [BioMegaTron](https://arxiv.org/pdf/2010.06060.pdf), and Covid-Twitter-BERT(https://arxiv.org/pdf/2005.07503.pdf) motivated us to study the domain adaptation of [Amazon Review Dataset](https://nijianmo.github.io/amazon/index.html) using the ELECTRA model. We call this model as AmazonELECTRA.
+For example, the Twitter dataset represents a domain in itself since it has a unique type of vocabulary (informal words mostly) and a short length of sequence which is less than 140 characters. The covid-19 dataset (CORD-19) also represents another domain since it uses a specific domain vocabulary in the biomedical field. Promising domain adaptation results in literature such as [BioBERT](https://arxiv.org/ftp/arxiv/papers/1901/1901.08746.pdf), [PubMedBERT](https://arxiv.org/pdf/2007.15779.pdf), [BioMegaTron](https://arxiv.org/pdf/2010.06060.pdf), and [Covid-Twitter-BERT](https://arxiv.org/pdf/2005.07503.pdf) motivated us to study the domain adaptation of [Amazon Review Dataset](https://nijianmo.github.io/amazon/index.html) using the ELECTRA model. We call this model as AmazonELECTRA.
 
 Now given our model- AmazonELECTRA, we further try to address the following questions
 
@@ -37,8 +37,9 @@ Now given our model- AmazonELECTRA, we further try to address the following ques
 
 ##### What will be the performance of the AmazonELECTRA model in the out-domain dataset?
 
->Another question that we will be investigating is the performance of AmazonELECTRA with general domain datasets such as [GLUE benchmark](https://arxiv.org/pdf/1804.07461.pdf). This question will focus more on whether the potential improvement with AmazonELECTRA is caused by using informal dataset or the domain constrained dataset.
+>To address this question, we will investigate the performance of AmazonELECTRA with general domain datasets such as [GLUE benchmark](https://arxiv.org/pdf/1804.07461.pdf). This question will focus more on whether the potential improvement with AmazonELECTRA is caused by using informal dataset or the domain constrained dataset.
 >
+
 
 * * *
 
@@ -69,15 +70,15 @@ We generated a specific domain vocabulary (50K words) using Amazon Review Datase
 
 ![Figure 2](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/Word_embedding_3.png)
 
-(Source : [Medium: Understanding BERT-Word Embeddings](https://medium.com/@dhartidhami/understanding-bert-word-embeddings-7dc4d2ea54ca)
+(Source : [Medium - Understanding BERT-Word Embeddings](https://medium.com/@dhartidhami/understanding-bert-word-embeddings-7dc4d2ea54ca))
 
-We choose 50K words like what [RoBERTa](https://arxiv.org/pdf/1907.11692.pdf) and [BioMegaTron](https://arxiv.org/pdf/2010.06060.pdf) model used, which seems to be more effective in capturing the contextual representation than the 30K words that was used by BERT and ELECTRA.
+We choose 50K words like what [RoBERTa](https://arxiv.org/pdf/1907.11692.pdf) and [BioMegaTron](https://arxiv.org/pdf/2010.06060.pdf) model used, which seems to be more effective in capturing the contextual representation than the 30K words that was used by BERT and ELECTRA model.
 
 After creating the vocabulary file we start preparing our model for pre-training and fine-tuning, and we will talk about each section in detail separately.
 
 ### ELECTRA Hyperparameters 
 
-Hyperparameters in BERT-like models play a significant role in improving the loss score during the pre-training phase and accuracy during the fine-tuning phase. One of these hyperparameters is the batch size. The batch size affects the flexibility of the learning, as stated in [RoBERTa](https://arxiv.org/pdf/1907.11692.pdf) paper. The model RoBERTa used up to 8K as batch size, similar to what PubMedBERT and BioMegatron models used. In our experiment, we used up to 1024 as batch size, and we pre-trained our model for more than 250K steps.  The original ELECTRA model was pre-trained using 1M steps with a batch size of 256, which implies both models have an equal number of samples iterated in the pre-training phase.
+Hyperparameters in BERT-like models play a significant role in improving the loss score during the pre-training phase and accuracy during the fine-tuning phase. One of these hyperparameters is the batch size. The batch size affects the flexibility of the learning, as stated in [RoBERTa](https://arxiv.org/pdf/1907.11692.pdf) paper. The model RoBERTa used up to 8K as batch size, similar to what [PubMedBERT](https://arxiv.org/pdf/2007.15779.pdf) and [BioMegaTron](https://arxiv.org/pdf/2010.06060.pdf) models used. In our experiment, we used up to 1024 as batch size, and we pre-trained our model for more than 250K steps.  The original ELECTRA model was pre-trained using 1M steps with a batch size of 256, which implies both models have an equal number of samples iterated in the pre-training phase.
 
 Moreover, the learning rate is another critical component in the pre-training phase. We kept the learning rate like the one used in the ELECTRA original setting. Learning rate represent the peak value of the learning rate at the 10% steps before decaying to the rest of the pre-training phase. The 10% phase in deep learning is called the warmup stage and it is widely used in literature. After we initiate the pre-training stage with our model, we monitor the progress of the loss score through Tensor Board, as we will show later.
 
@@ -91,6 +92,7 @@ Moreover, the learning rate is another critical component in the pre-training ph
 | Train Steps        | 766K    | 250K          |
 
 Hyperparameters used for ELECTRA and AmazonELECTRA during pre-training phase.
+
 
 * * *
 
@@ -113,7 +115,7 @@ Loss score during the Pre-Training Phase observed using Tensor Board
 
 After pretraining the model, the next step was to fine tune it on NLP downstream tasks. We decided to choose two NLP tasks, i.e., Sentence Classification and Question Answering to fine tune our model and analyze the results.
 
-#### The dataset used for Sentence classification and Question Answering tasks are as follows,
+The dataset used for Sentence classification and Question Answering tasks are as follows,
 
 ##### Sentence Classification:
 
@@ -138,15 +140,15 @@ Evaluation metric for this task is F1 score and exact match EM
 
 Even though we initially decided to fine-tune our models on two tasks, but due to time constraint and resource restriction, we were only able to fine-tune our model for the Sentence Classification task. Question Answering task dataset i.e. AmazonQA is a large dataset (size > 1.5 GB) and requires a lot of preprocessing which needs additional time and resources. So, we are planning to fine-tune the model with AmazonQA dataset in future.
 
+In addition, we also fine-tuned our model with several downstream tasks form GLUE benchmark. Following table lists the downstream tasks from GLUE Benchmark ( Source: [GLUE Benchmark paper](https://arxiv.org/pdf/1804.07461.pdf))
+
 ![Figure 4](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/GLUE_tasks.png)
 
-Downstream Tasks on GLUE Benchmark ( Source: [GLUE Benchmark paper](https://arxiv.org/pdf/1804.07461.pdf))
-
-Below table shows the results of AmazonELECTRA model on various downsteam tasks,
+Below table shows the results of AmazonELECTRA model on various NLP downsteam tasks,
 
 ![Figure 5](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/AmazonELECTRA_results.png)
 
-We have also used wandb.ai tool from hugging face library which track different runs of the model.
+We have also used wandb.ai tool from hugging face library which tracks different runs of the model.
 
 ![Figure 6](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/wandb.png)
 
@@ -156,6 +158,7 @@ The below table shows the results of running Hyperparameters search (grid search
 
 ![Figure 7](https://raw.githubusercontent.com/PrathvirajBillava95/slate/master/images/HPO_results.png)
 
+
 * * *
 
 
@@ -164,6 +167,7 @@ The below table shows the results of running Hyperparameters search (grid search
 The first question that we will tackle down in this discussion is whether AmazonELECTRA achieves the excepted results as per our hypothesis or not. As we can observe from results in Table 4, the Amazon sentimental analysis dataset, Amazon Kaggle dataset, and SST-2 dataset with AmazonELECTRA model achieved a gain in performance over ELECTRA by 0.5%-0.8%. For the reader, this may not be a noticeable improvement. However, text classification tasks tend to have this marginal performance gain as we can observe from BERT and ELECTRA results. However, we are expecting further improvement in other tasks such as question answering tasks (AmazonQA) and text generation tasks. 
 
 On the other hand, hyperparameters optimization HPO helps deep learning models finding the best points were model coverage. As we can see from table 5 the gap between the best and worst performance in F1 score is ~3% despite that they all used the same pre-trained model. This highlighted the effect of choosing hyperparameters during fine-tuning phase on the downstream task’s performance. Moreover, this is in line with early findings in literature showing the effect of batch size on BERT performance (Yao, et al. 2018). Finally, one of the interesting points that is debatable here is whether this improvement with AmazonELECTRA is due to the domain constrained dataset or the type of language used on this dataset (informal). We still have some doubts about this point, and with further investigation, we may reach a firm conclusion later.
+
 
 * * *
 
