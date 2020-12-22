@@ -31,12 +31,15 @@ For example, the Twitter dataset represents a domain in itself since it has a un
 Now given our model- AmazonELECTR, we further try to address following questions
 * * *
 
-> How is Hyper parameters affecting our model performance?
-> This sub-question is aimed more toward a general deep learning technique, which is part of our project learning process. To answer this question later, we will investigate trying out different hyperparameters, especially in the fine-tuning phase, such as learning rate, epochs, batch size, FP16 (mixed precision), PyTorch XLA, etc.
+##### How is Hyper parameters affecting our model performance?
+
+>This sub-question is aimed more toward a general deep learning technique, which is part of our project learning process. To answer this question later, we will investigate trying out different hyperparameters, especially in the fine-tuning phase, such as learning rate, epochs, batch size, FP16 (mixed precision), PyTorch XLA, etc.
 >
+
+##### What will be the performance of the AmazonELECTRA model in the out-domain dataset?
+
+>Another question that we will be investigating is the performance of AmazonELECTRA with general domain datasets such as [GLUE benchmark](https://arxiv.org/pdf/1804.07461.pdf). This question will focus more on whether the potential improvement with AmazonELECTRA is caused by using informal dataset or the domain constrained dataset.
 >
-> What will be the performance of the AmazonELECTRA model in the out-domain dataset?
->Another question that we will be investigating is the performance of AmazonELECTRA with general domain datasets such as [GLUE benchmark](https://arxiv.org/pdf/1804.07461.pdf. This question will focus more on whether the potential improvement with AmazonELECTRA is caused by using informal dataset or the domain constrained dataset.
 
 * * *
 
